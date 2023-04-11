@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://barberappdb:tVkYKLxr0w32velCbJI8YYdkH2w6HpLv@dpg-cgjkvfg2qv2etm3tvq3g-a.frankfurt-postgres.render.com/barberappdb"
+}
+
+model Users {
+  id         String    @id @unique @default(uuid())
+  id_stripe  String?   @default("")
+  nome       String
+  barbearia  String
+  email      String
+  senha      String
+  assinante  Boolean   @default(false)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("users")
+}
+
+model Sessao {
+  id         String    @id @unique @default(uuid())
+  email      String
+  senha      String
+  assinante  Boolean
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  iduser     String?
+
+  @@map("sessao")
+}
+
+model Cortes {
+  id         String    @id @unique @default(uuid())
+  iduser     String?
+  corte      String
+  valor      String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  foto1      String?
+  foto2      String?
+
+  @@map("cortes")
+}
+
+model ClientesAtendidos {
+  id         String    @id @unique @default(uuid())
+  iduser     String?
+  nome       String
+  hora       String
+  data       String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  valor      String
+  corte      String
+  isok       Boolean?  @default(false)
+
+  @@map("clientesatendidos")
+}
